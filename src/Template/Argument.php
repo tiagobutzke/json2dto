@@ -14,11 +14,11 @@ use Json2Dto\TemplateInterface;
 abstract class Argument implements TemplateInterface
 {
     protected static $template = '
-/**
- * @var %s
- */
- protected $%s = array();
-';
+    /**
+     * @var %s
+     */
+     protected $%s = array();
+    ';
 
     public static function getTemplate()
     {

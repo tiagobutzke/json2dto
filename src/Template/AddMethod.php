@@ -14,16 +14,16 @@ use Json2Dto\TemplateInterface;
 abstract class AddMethod implements TemplateInterface
 {
     protected  static $template = '
-/**
- * Add %1$s
- *
- * @param $%1$s
- */
- public function add%2$s(%2$s $%1$s)
- {
-    $this->%1$s[] = $%1$s;
- }
-';
+    /**
+     * Add %1$s
+     *
+     * @param $%1$s
+     */
+     public function add%2$s(%2$s $%1$s)
+     {
+        $this->%1$s[] = $%1$s;
+     }
+    ';
 
     public static function getTemplate()
     {

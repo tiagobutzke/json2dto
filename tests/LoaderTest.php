@@ -23,7 +23,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testJsonContent()
     {
-        $loader = $this->loader->load();
+        $loader = $this->loader->load(array('--namespace' => 'Json2Dto'));
     }
 
     /**
@@ -32,7 +32,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     public function testJsonDecodeProblem()
     {
         $loader = new Loader(__DIR__ . '/Resources/json_broken_file.json');
-        $loader->load();
+        $loader->load(array('--namespace' => 'Json2Dto'));
     }
 
     /**

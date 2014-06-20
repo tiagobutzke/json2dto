@@ -20,7 +20,7 @@ class Command
     );
 
     protected $options = array(
-        '--namespace' => null
+        '--namespace' => 'Json2Dto'
     );
 
     public static function main()
@@ -35,7 +35,7 @@ class Command
         $this->handleOptions($args);
 
         $loader = new Loader($this->arguments['json']);
-        $objects = $loader->load();
+        $objects = $loader->load($this->options);
     }
 
     /**

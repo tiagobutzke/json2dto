@@ -13,8 +13,11 @@ use Json2Dto\Exceptions\FileNotExistsException;
 use Json2Dto\Exceptions\JsonDecodeProblemException;
 use Json2Dto\Template\AddMethod;
 use Json2Dto\Template\Argument;
+use Json2Dto\Template\Classes;
 use Json2Dto\Template\GetMethod;
 use Json2Dto\Template\SetMethod;
+use Json2Dto\Template\SetTypedMethod;
+use Json2Dto\Template\UseNamespace;
 
 class Loader
 {
@@ -27,6 +30,11 @@ class Loader
      * @var \stdClass
      */
     protected $json;
+
+    /**
+     * @var array
+     */
+    protected $options;
 
     /**
      * @var array
@@ -51,8 +59,9 @@ class Loader
      *
      * @throws Exceptions\JsonDecodeProblemException
      */
-    public function load()
+    public function load($options)
     {
+        $this->options = $options;
         $this->loadJson();
         if ($this->json == null) {
             throw new JsonDecodeProblemException(
@@ -61,7 +70,25 @@ class Loader
         }
 
         $this->loadNode($this->json);
-        var_dump($this->objects);
+        $this->bindClasses();
+    }
+
+    /**
+     * Bind loaded classes
+     */
+    protected function bindClasses()
+    {
+        foreach ($this->objects as $object => $value) {
+            $this->objects[$object]['class'] = sprintf(
+                Classes::getTemplate(),
+                $this->options['--namespace'],
+                $this->objects[$object]['use'],
+                ucfirst($object),
+                $this->objects[$object]['arguments'],
+                $this->objects[$object]['methods']
+            );
+            var_dump($this->objects[$object]['class']);
+        }
     }
 
     /**
@@ -81,7 +108,25 @@ class Loader
 
             // is a object
             if ($this->isInternalType($property) && is_object($value)) {
-                $this->objects[$property];
+                $this->objects[$property]['arguments'] .= sprintf(
+                    Argument::getTemplate(),
+                    ucfirst($property),
+                    lcfirst($property)
+                );
+                $this->objects[$property]['methods'] .= sprintf(
+                    GetMethod::getTemplate(),
+                    lcfirst($property),
+                    ucfirst($property)
+                );
+                $this->objects[$property]['methods'] .= sprintf(
+                    SetTypedMethod::getTemplate(),
+                    lcfirst($property),
+                    ucfirst($property)
+                );
+                $this->objects[$property]['use'] .= sprintf(
+                    UseNamespace::getTemplate(),
+                    $this->options['--namespace'].'\\'.ucfirst($property)
+                );
                 $this->loadNode($value, $property);
             }
 
@@ -102,6 +147,10 @@ class Loader
                     lcfirst($property),
                     ucfirst($property)
                 );
+                $this->objects[$property]['use'] .= sprintf(
+                    UseNamespace::getTemplate(),
+                    $this->options['--namespace'].'\\'.ucfirst($property)
+                );
             }
 
             // is a property
@@ -119,7 +168,8 @@ class Loader
                 $this->objects[$object]['methods'] .= sprintf(
                     SetMethod::getTemplate(),
                     lcfirst($property),
-                    ucfirst($property)
+                    ucfirst($property),
+                    gettype($value)
                 );
             }
         }

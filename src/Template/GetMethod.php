@@ -14,16 +14,16 @@ use Json2Dto\TemplateInterface;
 class GetMethod implements TemplateInterface
 {
     protected static $template = '
-/**
- * Get %1$s
- *
- * @return %1$s
- */
- public function get%2$s()
- {
-    return $this->%1$s;
- }
-';
+    /**
+     * Get %1$s
+     *
+     * @return $%1$s
+     */
+     public function get%2$s()
+     {
+        return $this->%1$s;
+     }
+    ';
 
     public static function getTemplate()
     {

@@ -9,6 +9,8 @@
 namespace Json2Dto\Template;
 
 
+use Json2Dto\TemplateInterface;
+
 abstract class Classes implements TemplateInterface
 {
     public static $template = '
@@ -19,13 +21,15 @@ abstract class Classes implements TemplateInterface
  * @author Tiago Butzke <tiago.butzke@gmail.com>
  * ================================================
  */
- %1$s
+ namespace %1$s;
 
- class %2$s
+ %2$s
+
+ class %3$s
  {
-    %3$s
-
     %4$s
+
+    %5$s
  }
 ';
 
