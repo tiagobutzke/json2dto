@@ -11,6 +11,10 @@ namespace Json2Dto;
 
 use Json2Dto\Exceptions\FileNotExistsException;
 use Json2Dto\Exceptions\JsonDecodeProblemException;
+use Json2Dto\Template\AddMethod;
+use Json2Dto\Template\Argument;
+use Json2Dto\Template\GetMethod;
+use Json2Dto\Template\SetMethod;
 
 class Loader
 {
@@ -57,38 +61,66 @@ class Loader
         }
 
         $this->loadNode($this->json);
+        var_dump($this->objects);
     }
 
     /**
      * Trigger a json node
      *
      * @param \stdClass $node
+     * @param string $object
      */
-    protected function loadNode(\stdClass $node)
+    protected function loadNode(\stdClass $node, $object = null)
     {
         $properties = get_object_vars($node);
 
         foreach ($properties as $property => $value) {
-            var_dump($property);
-
             if ($property == '') {
                 continue;
             }
 
             // is a object
             if ($this->isInternalType($property) && is_object($value)) {
-                var_dump('*** Object');
-                $this->loadNode($value);
+                $this->objects[$property];
+                $this->loadNode($value, $property);
             }
 
             // is a collection
             if ($this->isInternalType($property) && is_array($value)) {
-                var_dump('*** Collection');
+                $this->objects[$object]['arguments'] .= sprintf(
+                    Argument::getTemplate(),
+                    ucfirst($property),
+                    lcfirst($property)
+                );
+                $this->objects[$object]['methods'] .= sprintf(
+                    GetMethod::getTemplate(),
+                    lcfirst($property),
+                    ucfirst($property)
+                );
+                $this->objects[$object]['methods'] .= sprintf(
+                    AddMethod::getTemplate(),
+                    lcfirst($property),
+                    ucfirst($property)
+                );
             }
 
             // is a property
             if ($this->isInternalType($property) && $this->isInternalType($value)) {
-                var_dump('*** Property');
+                $this->objects[$object]['arguments'] .= sprintf(
+                    Argument::getTemplate(),
+                    lcfirst($property),
+                    lcfirst($property)
+                );
+                $this->objects[$object]['methods'] .= sprintf(
+                    GetMethod::getTemplate(),
+                    lcfirst($property),
+                    ucfirst($property)
+                );
+                $this->objects[$object]['methods'] .= sprintf(
+                    SetMethod::getTemplate(),
+                    lcfirst($property),
+                    ucfirst($property)
+                );
             }
         }
     }
