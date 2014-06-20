@@ -35,4 +35,3 @@ class CommandTest extends \PHPUnit_Framework_TestCase
         $_SERVER['argv'] = array();
     }
 }
- 

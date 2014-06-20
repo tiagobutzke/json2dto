@@ -1,0 +1,322 @@
+{
+    "meta": "",
+    "paymentSettings": {
+        "bankslip": {
+            "total": "0.00",
+            "fixedValue": 0,
+            "serviceFee": 0,
+            "serviceFeePercentage": "11.00"
+        },
+        "creditcard": {
+            "total": {
+                "1": "0.00",
+                "2": "0.00",
+                "3": "0.00",
+                "4": "0.00",
+                "5": "0.00",
+                "6": "0.00",
+                "7": "0.00",
+                "8": "0.00",
+                "9": "0.00",
+                "10": "0.00",
+                "11": "0.00",
+                "12": "0.00"
+            },
+            "fixedValue": 0,
+            "serviceFee": {
+                "1": 0,
+                "2": 0,
+                "3": 0,
+                "4": 0,
+                "5": 0,
+                "6": 0,
+                "7": 0,
+                "8": 0,
+                "9": 0,
+                "10": 0,
+                "11": 0,
+                "12": 0
+            },
+            "serviceFeePercentage": {
+                "1": "11.00",
+                "2": "11.00",
+                "3": "11.00",
+                "4": "11.00",
+                "5": "11.00",
+                "6": "11.00",
+                "7": "11.00",
+                "8": "11.00",
+                "9": "11.00",
+                "10": "11.00",
+                "11": "11.00",
+                "12": "11.00"
+            }
+        },
+        "debitcard": {
+            "total": "0.00",
+            "fixedValue": 0,
+            "serviceFee": 0,
+            "serviceFeePercentage": "11.00"
+        },
+        "paypal_hpp": {
+            "total": "0.00",
+            "fixedValue": 0,
+            "serviceFee": 0,
+            "serviceFeePercentage": "11.00"
+        },
+        "banktransfer": {
+            "total": "0.00",
+            "fixedValue": 0,
+            "serviceFee": 0,
+            "serviceFeePercentage": "11.00"
+        }
+    },
+    "items": [
+        {
+            "from": "São Paulo, SP",
+            "to": "Rio de Janeiro, RJ",
+            "booking_engine": "cbconnect",
+            "parts": [
+                {
+                    "trip_id": 333,
+                    "departure": {
+                        "price": 9000,
+                        "waypoint": {
+                            "id": 113,
+                            "prices": [
+                                {
+                                    "waypoint": 123,
+                                    "price": 9000
+                                },
+                                {
+                                    "waypoint": 133,
+                                    "price": 4500
+                                }
+                            ],
+                            "schedule": {
+                                "id": 12,
+                                "date": "2015-10-31",
+                                "time": "11:00",
+                                "timezone": "America/Sao_Paulo"
+                            },
+                            "context": "departure",
+                            "place": {
+                                "country": "BRA",
+                                "state": "São Paulo",
+                                "city": "São Paulo",
+                                "station": {
+                                    "current": {
+                                        "id": 111,
+                                        "name": "Autobus Terminal of Barra Funda",
+                                        "locale": "en_US"
+                                    },
+                                    "default": {
+                                        "id": 1231,
+                                        "name": "Terminal Rodoviário da Barra Funda",
+                                        "locale": "pt_BR"
+                                    }
+                                },
+                                "locale": "en_US",
+                                "id": 123
+                            },
+                            "isDeparture": true,
+                            "position": 0
+                        }
+                    },
+                    "arrival": {
+                        "price": 0,
+                        "waypoint": {
+                            "id": 123,
+                            "prices": [],
+                            "schedule": {
+                                "id": 13,
+                                "date": "2015-10-31",
+                                "time": "19:00",
+                                "timezone": "America/Sao_Paulo"
+                            },
+                            "context": "arrival",
+                            "place": {
+                                "country": "BRA",
+                                "state": "São Paulo",
+                                "city": "Santos",
+                                "station": {
+                                    "current": {
+                                        "id": 112,
+                                        "name": "Galeao Terminal",
+                                        "locale": "en_US"
+                                    },
+                                    "default": {
+                                        "id": 1232,
+                                        "name": "Terminal do Galeão",
+                                        "locale": "pt_BR"
+                                    }
+                                },
+                                "locale": "en_US",
+                                "id": 124
+                            },
+                            "isDeparture": true,
+                            "position": 2
+                        }
+                    },
+                    "busCompany": {
+                        "name": "Itapemirim",
+                        "id": 12
+                    },
+                    "bus": {
+                        "serviceClass": "Conventional",
+                        "name": "BusName",
+                        "id": 1
+                    },
+                    "waypoints": [
+                        {
+                            "id": 113,
+                            "prices": [
+                                {
+                                    "waypoint": 123,
+                                    "price": 9000
+                                },
+                                {
+                                    "waypoint": 133,
+                                    "price": 4500
+                                }
+                            ],
+                            "schedule": {
+                                "id": 12,
+                                "date": "2015-10-31",
+                                "time": "11:00",
+                                "timezone": "America/Sao_Paulo"
+                            },
+                            "context": "departure",
+                            "place": {
+                                "country": "BRA",
+                                "state": "São Paulo",
+                                "city": "São Paulo",
+                                "station": {
+                                    "current": {
+                                        "id": 111,
+                                        "name": "Autobus Terminal of Barra Funda",
+                                        "locale": "en_US"
+                                    },
+                                    "default": {
+                                        "id": 1231,
+                                        "name": "Terminal Rodoviário da Barra Funda",
+                                        "locale": "pt_BR"
+                                    }
+                                },
+                                "locale": "en_US",
+                                "id": 123
+                            },
+                            "isDeparture": true,
+                            "position": 0
+                        },
+                        {
+                            "id": 123,
+                            "prices": [],
+                            "schedule": {
+                                "id": 13,
+                                "date": "2015-10-31",
+                                "time": "19:00",
+                                "timezone": "America/Sao_Paulo"
+                            },
+                            "context": "arrival",
+                            "place": {
+                                "country": "BRA",
+                                "state": "São Paulo",
+                                "city": "Santos",
+                                "station": {
+                                    "current": {
+                                        "id": 112,
+                                        "name": "Galeao Terminal",
+                                        "locale": "en_US"
+                                    },
+                                    "default": {
+                                        "id": 1232,
+                                        "name": "Terminal do Galeão",
+                                        "locale": "pt_BR"
+                                    }
+                                },
+                                "locale": "en_US",
+                                "id": 124
+                            },
+                            "isDeparture": true,
+                            "position": 2
+                        },
+                        {
+                            "id": 133,
+                            "prices": [
+                                {
+                                    "waypoint": 123,
+                                    "price": 1500
+                                }
+                            ],
+                            "schedule": {
+                                "id": 14,
+                                "date": "2015-10-31",
+                                "time": "13:00",
+                                "timezone": "America/Sao_Paulo"
+                            },
+                            "context": "stop",
+                            "place": {
+                                "country": "BRA",
+                                "state": "São Paulo",
+                                "city": "Guaruja",
+                                "station": {
+                                    "current": {
+                                        "id": 112,
+                                        "name": "Big Beach",
+                                        "locale": "en_US"
+                                    },
+                                    "default": {
+                                        "id": 1232,
+                                        "name": "Praia Grande",
+                                        "locale": "pt_BR"
+                                    }
+                                },
+                                "locale": "en_US",
+                                "id": 124
+                            },
+                            "isDeparture": true,
+                            "position": 1
+                        }
+                    ],
+                    "seatTypes": [
+                        {
+                            "name": "Professor",
+                            "discount": 0.9,
+                            "id": 1
+                        },
+                        {
+                            "name": "Handcap",
+                            "discount": 0.9,
+                            "id": 1
+                        }
+                    ],
+                    "products": [
+                        {
+                            "uuid": "ab123d123d1",
+                            "name": "Potato Chips",
+                            "price": 500,
+                            "currency": "BRL",
+                            "avaliable": true
+                        },
+                        {
+                            "uuid": "ab123dc121",
+                            "name": "Potato Chips Large",
+                            "price": 1500,
+                            "currency": "BRL",
+                            "avaliable": true
+                        },
+                        {
+                            "uuid": "ab123d5fd",
+                            "name": "Extra Luggage 1kg",
+                            "price": 1000,
+                            "currency": "BRL",
+                            "avaliable": false
+                        }
+                    ],
+                    "availableSeats": 10
+                }
+            ]
+        }
+    ]
+}

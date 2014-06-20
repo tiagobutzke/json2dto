@@ -10,6 +10,7 @@ namespace Json2Dto;
 
 
 use Json2Dto\Exceptions\FileNotExistsException;
+use Json2Dto\Exceptions\JsonDecodeProblemException;
 
 class Loader
 {
@@ -17,6 +18,11 @@ class Loader
      * @var \SplFileObject
      */
     protected $file;
+
+    /**
+     * @var \stdClass
+     */
+    protected $json;
 
     /**
      * @param string $fileName
@@ -29,5 +35,30 @@ class Loader
         }
 
         $this->file = new \SplFileObject($fileName);
+    }
+
+    public function load()
+    {
+        $this->loadJson();
+        if ($this->json == null) {
+            throw new JsonDecodeProblemException(
+                "It's not possible decode json content. Please, verify the json syntax and try again."
+            );
+        }
+
+        
+    }
+
+    /**
+     * Load file content and decode the json
+     */
+    protected function loadJson()
+    {
+        $lines = '';
+        while (!$this->file->eof()) {
+            $lines .= $this->file->fgets();
+        }
+
+        $this->json = json_decode($lines);
     }
 } 
