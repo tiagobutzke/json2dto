@@ -33,6 +33,8 @@ class Command
     {
         $this->handleArgs($args);
         $this->handleOptions($args);
+
+        $loader = new Loader($this->arguments['json']);
     }
 
     /**
