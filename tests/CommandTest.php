@@ -8,11 +8,16 @@
 
 namespace Json2DtoTests;
 
+use Json2Dto\Command;
+
 class CommandTest extends \PHPUnit_Framework_TestCase
 {
-    public function testExec()
+    /**
+     * @expectedException \Json2Dto\Exceptions\ArgumentNotExistsException
+     */
+    public function testNoArguments()
     {
-        echo shell_exec('./src/json2dto');
+        Command::main();
     }
 }
  
