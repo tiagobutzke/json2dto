@@ -25,6 +25,11 @@ class Loader
     protected $json;
 
     /**
+     * @var array
+     */
+    protected $objects;
+
+    /**
      * @param string $fileName
      * @throws Exceptions\FileNotExistsException
      */
@@ -37,6 +42,11 @@ class Loader
         $this->file = new \SplFileObject($fileName);
     }
 
+    /**
+     * Load json content and save classes format in memory
+     *
+     * @throws Exceptions\JsonDecodeProblemException
+     */
     public function load()
     {
         $this->loadJson();
@@ -46,7 +56,20 @@ class Loader
             );
         }
 
-        
+        $this->loadNode($this->json);
+    }
+
+    protected function loadNode(\stdClass $node)
+    {
+        $properties = get_object_vars($node);
+        var_dump($node);
+        die;
+
+        foreach ($properties as $property) {
+            if (!is_object($property)) {
+
+            }
+        }
     }
 
     /**
