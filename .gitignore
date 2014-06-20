@@ -1,0 +1,6 @@
+vendor
+tests/_reports
+composer.lock
+.git
+.idea
+.DS_Store
