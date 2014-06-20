@@ -59,17 +59,43 @@ class Loader
         $this->loadNode($this->json);
     }
 
+    /**
+     * Trigger a json node
+     *
+     * @param \stdClass $node
+     */
     protected function loadNode(\stdClass $node)
     {
         $properties = get_object_vars($node);
-        var_dump($node);
-        die;
 
-        foreach ($properties as $property) {
-            if (!is_object($property)) {
+        foreach ($properties as $property => $value) {
+            var_dump($property);
 
+            if ($property == '') {
+                continue;
+            }
+
+            // is a object
+            if ($this->isInternalType($property) && is_object($value)) {
+                var_dump('*** Object');
+                $this->loadNode($value);
+            }
+
+            // is a collection
+            if ($this->isInternalType($property) && is_array($value)) {
+                var_dump('*** Collection');
+            }
+
+            // is a property
+            if ($this->isInternalType($property) && $this->isInternalType($value)) {
+                var_dump('*** Property');
             }
         }
+    }
+
+    protected function isInternalType($property)
+    {
+        return (is_string($property) || is_int($property) || is_bool($property) || is_float($property));
     }
 
     /**
