@@ -5,7 +5,6 @@
  * Date: 6/20/14
  * Time: 12:26 AM
  */
-
 namespace Json2Dto;
 
 use Json2Dto\Exceptions\FileNotExistsException;
@@ -45,12 +44,19 @@ class Loader
     /**
      * @var array
      */
+    protected $classes;
+
+    /**
+     * @var array
+     */
     protected $queue = array();
 
     /**
      * @param string $fileName
      * @param array $options
+     *
      * @throws Exceptions\FileNotExistsException
+     * @throws Exceptions\JsonDecodeProblemException
      */
     public function __construct($fileName, array $options)
     {
@@ -60,6 +66,14 @@ class Loader
 
         $this->file = new \SplFileObject($fileName);
         $this->options = $options;
+
+        $this->loadJson();
+
+        if ($this->json == null) {
+            throw new JsonDecodeProblemException(
+                "It's not possible decode json content. Please, verify the json syntax and try again."
+            );
+        }
     }
 
     /**
@@ -71,19 +85,11 @@ class Loader
      */
     public function load()
     {
-        $this->loadJson();
-
-        if ($this->json == null) {
-            throw new JsonDecodeProblemException(
-                "It's not possible decode json content. Please, verify the json syntax and try again."
-            );
-        }
-
         $this->queue['Dto'] = $this->json;
         $this->processQueue();
         $this->bindClasses();
 
-        return $this->objects;
+        return $this->classes;
     }
 
     /**
@@ -106,7 +112,7 @@ class Loader
     protected function bindClasses()
     {
         foreach ($this->objects as $object => $value) {
-            $this->objects[$object]['class'] = sprintf(
+            $this->classes[$object] = sprintf(
                 Classes::getTemplate(),
                 $this->options['--namespace'],
                 $this->objects[$object]['use'],
@@ -137,6 +143,7 @@ class Loader
                 $this->objects[$object]['methods'] .= sprintf(
                     GetMethod::getTemplate(),
                     Format::methodName($property),
+                    Format::className($property),
                     Format::className($property)
                 );
                 $this->objects[$object]['methods'] .= sprintf(
@@ -161,6 +168,7 @@ class Loader
                 $this->objects[$object]['methods'] .= sprintf(
                     GetMethod::getTemplate(),
                     Format::methodName($property),
+                    Format::className($property),
                     Format::className($property)
                 );
                 $this->objects[$object]['methods'] .= sprintf(
@@ -179,19 +187,20 @@ class Loader
             if ($this->isInternalType($value)) {
                 $this->objects[$object]['arguments'] .= sprintf(
                     Argument::getTemplate(),
-                    Format::paramName($property),
+                    strtolower(gettype($property)),
                     Format::paramName($property)
                 );
                 $this->objects[$object]['methods'] .= sprintf(
                     GetMethod::getTemplate(),
                     Format::methodName($property),
+                    strtolower(gettype($value)),
                     Format::className($property)
                 );
                 $this->objects[$object]['methods'] .= sprintf(
                     SetMethod::getTemplate(),
                     Format::methodName($property),
                     Format::className($property),
-                    gettype($value)
+                    strtolower(gettype($value))
                 );
             }
         }

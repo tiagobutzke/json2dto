@@ -46,19 +46,22 @@ class Writer
         $this->objects = $objects;
     }
 
+    /**
+     * Write classes
+     */
     public function write()
     {
-        foreach ($this->objects as $objectName => $object)
+        foreach ($this->objects as $className => $classContent)
         {
-            $objectName = Format::className($objectName);
-            $fileName = "{$this->directory}/{$objectName}.php";
+            $className = Format::className($className);
+            $fileName = "{$this->directory}/{$className}.php";
 
             if (file_exists($fileName)) {
                 unlink($fileName);
             }
 
             $file = new \SplFileObject($fileName, 'w');
-            $file->fwrite(html_entity_decode($object['class']));
+            $file->fwrite(html_entity_decode($classContent));
         }
     }
 } 

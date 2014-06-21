@@ -17,9 +17,9 @@ class GetMethod implements TemplateInterface
     /**
      * Get %1$s
      *
-     * @return $%1$s
+     * @return %2$s
      */
-     public function get%2$s()
+     public function get%3$s()
      {
         return $this->%1$s;
      }

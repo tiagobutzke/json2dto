@@ -28,7 +28,6 @@ abstract class Classes implements TemplateInterface
  class %3$s
  {
     %4$s
-
     %5$s
  }
 ';
