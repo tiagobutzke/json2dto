@@ -8,7 +8,6 @@
 
 namespace Json2Dto;
 
-
 use Json2Dto\Exceptions\FileNotExistsException;
 use Json2Dto\Exceptions\JsonDecodeProblemException;
 use Json2Dto\Template\AddMethod;

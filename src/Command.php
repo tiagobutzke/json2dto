@@ -36,6 +36,7 @@ class Command
 
         $loader = new Loader($this->arguments['json'], $this->options);
         $objects = $loader->load();
+        $writer = new Writer($this->arguments['directory'], $objects);
     }
 
     /**
