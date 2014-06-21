@@ -34,8 +34,8 @@ class Command
         $this->handleArgs($args);
         $this->handleOptions($args);
 
-        $loader = new Loader($this->arguments['json']);
-        $objects = $loader->load($this->options);
+        $loader = new Loader($this->arguments['json'], $this->options);
+        $objects = $loader->load();
     }
 
     /**

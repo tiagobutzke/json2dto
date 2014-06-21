@@ -18,12 +18,13 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->loader = new Loader(__DIR__ . '/Resources/json_to_test.json');
+        $this->loader = new Loader(__DIR__ . '/Resources/json_to_test.json', array('--namespace' => 'Json2Dto'));
     }
 
     public function testJsonContent()
     {
-        $loader = $this->loader->load(array('--namespace' => 'Json2Dto'));
+        $loader = $this->loader->load();
+        $this->assertArrayHasKey('Dto', $loader);
     }
 
     /**
@@ -31,8 +32,8 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testJsonDecodeProblem()
     {
-        $loader = new Loader(__DIR__ . '/Resources/json_broken_file.json');
-        $loader->load(array('--namespace' => 'Json2Dto'));
+        $loader = new Loader(__DIR__ . '/Resources/json_broken_file.json', array('--namespace' => 'Json2Dto'));
+        $loader->load();
     }
 
     /**
@@ -40,7 +41,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testFileExists()
     {
-        new Loader('a');
+        new Loader('a', array('--namespace' => 'Json2Dto'));
     }
 }
  

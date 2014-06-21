@@ -50,26 +50,30 @@ class Loader
 
     /**
      * @param string $fileName
+     * @param array $options
      * @throws Exceptions\FileNotExistsException
      */
-    public function __construct($fileName)
+    public function __construct($fileName, array $options)
     {
         if (!file_exists($fileName)) {
             throw new FileNotExistsException("The file [{$fileName}] do not exists.");
         }
 
         $this->file = new \SplFileObject($fileName);
+        $this->options = $options;
     }
 
     /**
      * Load json content and save classes format in memory
      *
      * @throws Exceptions\JsonDecodeProblemException
+     *
+     * @return array
      */
-    public function load($options)
+    public function load()
     {
-        $this->options = $options;
         $this->loadJson();
+
         if ($this->json == null) {
             throw new JsonDecodeProblemException(
                 "It's not possible decode json content. Please, verify the json syntax and try again."
@@ -79,6 +83,8 @@ class Loader
         $this->queue['Dto'] = $this->json;
         $this->processQueue();
         $this->bindClasses();
+
+        return $this->objects;
     }
 
     /**
