@@ -1,8 +1,14 @@
 {
     "name": "tiagobutzke/json2dto",
+    "type": "library",
     "description": "Generate DTO objects by a json",
-    "minimum-stability": "stable",
-    "license": "proprietary",
+    "keywords": ["json2dto", "DTO", "Generator", "JSON", "Data", "Transfer", "Object"],
+    "minimum-stability": "dev",
+    "license": "MIT",
+    "bin": ["json2dto"],
+    "config": {
+        "bin-dir": "bin"
+    },
     "authors": [
         {
             "name": "Tiago Butzke",
