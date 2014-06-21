@@ -11,6 +11,7 @@ namespace Json2Dto;
 
 use Json2Dto\Exceptions\ArgumentNotExistsException;
 use Json2Dto\Util\Filter;
+use Json2Dto\Util\Message;
 
 class Command
 {
@@ -31,13 +32,20 @@ class Command
 
     public function run(array $args)
     {
+        Message::write(Message::$startTemplate);
+
         $this->handleArgs($args);
         $this->handleOptions($args);
 
+        Message::write(Message::$loadingTemplate);
         $loader = new Loader($this->arguments['json'], $this->options);
         $objects = $loader->load();
+
+        Message::write(Message::$writingTemplate);
         $writer = new Writer($this->arguments['directory'], $objects);
         $writer->write();
+
+        Message::write(Message::$thanksTemplate);
     }
 
     /**

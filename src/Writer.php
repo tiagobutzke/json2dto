@@ -12,6 +12,7 @@ namespace Json2Dto;
 use Json2Dto\Exceptions\DirectoryNotExistsException;
 use Json2Dto\Exceptions\ObjectsNotProcessedException;
 use Json2Dto\Util\Format;
+use Json2Dto\Util\Message;
 
 class Writer
 {
@@ -54,6 +55,8 @@ class Writer
         foreach ($this->objects as $className => $classContent)
         {
             $className = Format::className($className);
+            Message::write(sprintf(Message::$classTemplate, $className));
+
             $fileName = "{$this->directory}/{$className}.php";
 
             if (file_exists($fileName)) {

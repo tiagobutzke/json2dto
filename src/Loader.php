@@ -18,6 +18,7 @@ use Json2Dto\Template\SetMethod;
 use Json2Dto\Template\SetTypedMethod;
 use Json2Dto\Template\UseNamespace;
 use Json2Dto\Util\Format;
+use Json2Dto\Util\Message;
 
 class Loader
 {
@@ -112,6 +113,8 @@ class Loader
     protected function bindClasses()
     {
         foreach ($this->objects as $object => $value) {
+            Message::write(sprintf(Message::$classTemplate, Format::className($object)));
+
             $this->classes[$object] = sprintf(
                 Classes::getTemplate(),
                 $this->options['--namespace'],
