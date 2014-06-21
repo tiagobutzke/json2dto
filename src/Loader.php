@@ -13,6 +13,7 @@ use Json2Dto\Exceptions\FileNotExistsException;
 use Json2Dto\Exceptions\JsonDecodeProblemException;
 use Json2Dto\Template\AddMethod;
 use Json2Dto\Template\Argument;
+use Json2Dto\Template\ArgumentCollection;
 use Json2Dto\Template\Classes;
 use Json2Dto\Template\GetMethod;
 use Json2Dto\Template\SetMethod;
@@ -42,6 +43,11 @@ class Loader
     protected $objects;
 
     /**
+     * @var array
+     */
+    protected $queue = array();
+
+    /**
      * @param string $fileName
      * @throws Exceptions\FileNotExistsException
      */
@@ -69,8 +75,23 @@ class Loader
             );
         }
 
-        $this->loadNode($this->json);
+        $this->queue['Dto'] = $this->json;
+        $this->processQueue();
         $this->bindClasses();
+    }
+
+    /**
+     * Process files in queue
+     */
+    protected function processQueue()
+    {
+        foreach ($this->queue as $object => $properties) {
+            $this->loadNode($properties, $object);
+        }
+
+        if (count($this->queue) > 0) {
+            $this->processQueue();
+        }
     }
 
     /**
@@ -87,7 +108,6 @@ class Loader
                 $this->objects[$object]['arguments'],
                 $this->objects[$object]['methods']
             );
-            var_dump($this->objects[$object]['class']);
         }
     }
 
@@ -102,38 +122,33 @@ class Loader
         $properties = get_object_vars($node);
 
         foreach ($properties as $property => $value) {
-            if ($property == '') {
-                continue;
-            }
-
-            // is a object
-            if ($this->isInternalType($property) && is_object($value)) {
-                $this->objects[$property]['arguments'] .= sprintf(
+            if (is_object($value)) {
+                $this->objects[$object]['arguments'] .= sprintf(
                     Argument::getTemplate(),
                     ucfirst($property),
                     lcfirst($property)
                 );
-                $this->objects[$property]['methods'] .= sprintf(
+                $this->objects[$object]['methods'] .= sprintf(
                     GetMethod::getTemplate(),
                     lcfirst($property),
                     ucfirst($property)
                 );
-                $this->objects[$property]['methods'] .= sprintf(
+                $this->objects[$object]['methods'] .= sprintf(
                     SetTypedMethod::getTemplate(),
                     lcfirst($property),
                     ucfirst($property)
                 );
-                $this->objects[$property]['use'] .= sprintf(
+                $this->objects[$object]['use'] .= sprintf(
                     UseNamespace::getTemplate(),
                     $this->options['--namespace'].'\\'.ucfirst($property)
                 );
-                $this->loadNode($value, $property);
+
+                $this->queue[$property] = $value;
             }
 
-            // is a collection
-            if ($this->isInternalType($property) && is_array($value)) {
+            if (is_array($value)) {
                 $this->objects[$object]['arguments'] .= sprintf(
-                    Argument::getTemplate(),
+                    ArgumentCollection::getTemplate(),
                     ucfirst($property),
                     lcfirst($property)
                 );
@@ -147,14 +162,15 @@ class Loader
                     lcfirst($property),
                     ucfirst($property)
                 );
-                $this->objects[$property]['use'] .= sprintf(
+                $this->objects[$object]['use'] .= sprintf(
                     UseNamespace::getTemplate(),
                     $this->options['--namespace'].'\\'.ucfirst($property)
                 );
+
+                $this->queue[$property] = $value[0];
             }
 
-            // is a property
-            if ($this->isInternalType($property) && $this->isInternalType($value)) {
+            if ($this->isInternalType($value)) {
                 $this->objects[$object]['arguments'] .= sprintf(
                     Argument::getTemplate(),
                     lcfirst($property),
@@ -173,6 +189,8 @@ class Loader
                 );
             }
         }
+
+        unset($this->queue[$object]);
     }
 
     protected function isInternalType($property)

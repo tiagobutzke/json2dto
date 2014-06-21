@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: Admin
  * Date: 6/20/14
- * Time: 8:33 AM
+ * Time: 8:43 PM
  */
 
 namespace Json2Dto\Template;
@@ -11,13 +11,13 @@ namespace Json2Dto\Template;
 
 use Json2Dto\TemplateInterface;
 
-abstract class Argument implements TemplateInterface
+abstract class ArgumentCollection implements TemplateInterface
 {
-    protected static $template = '
+    public static $template = '
     /**
      * @var %s
      */
-     protected $%s;
+     protected $%s = array();
     ';
 
     public static function getTemplate()

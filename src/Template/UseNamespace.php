@@ -11,7 +11,8 @@ namespace Json2Dto\Template;
 
 abstract class UseNamespace
 {
-    protected static $template = 'use %s;';
+    protected static $template = '
+use %s;';
 
     public static function getTemplate()
     {
