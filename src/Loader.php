@@ -19,6 +19,7 @@ use Json2Dto\Template\GetMethod;
 use Json2Dto\Template\SetMethod;
 use Json2Dto\Template\SetTypedMethod;
 use Json2Dto\Template\UseNamespace;
+use Json2Dto\Util\Format;
 
 class Loader
 {
@@ -125,22 +126,22 @@ class Loader
             if (is_object($value)) {
                 $this->objects[$object]['arguments'] .= sprintf(
                     Argument::getTemplate(),
-                    ucfirst($property),
-                    lcfirst($property)
+                    Format::className($property),
+                    Format::paramName($property)
                 );
                 $this->objects[$object]['methods'] .= sprintf(
                     GetMethod::getTemplate(),
-                    lcfirst($property),
-                    ucfirst($property)
+                    Format::methodName($property),
+                    Format::className($property)
                 );
                 $this->objects[$object]['methods'] .= sprintf(
                     SetTypedMethod::getTemplate(),
-                    lcfirst($property),
-                    ucfirst($property)
+                    Format::methodName($property),
+                    Format::className($property)
                 );
                 $this->objects[$object]['use'] .= sprintf(
                     UseNamespace::getTemplate(),
-                    $this->options['--namespace'].'\\'.ucfirst($property)
+                    $this->options['--namespace'].'\\'.Format::className($property)
                 );
 
                 $this->queue[$property] = $value;
@@ -149,22 +150,22 @@ class Loader
             if (is_array($value)) {
                 $this->objects[$object]['arguments'] .= sprintf(
                     ArgumentCollection::getTemplate(),
-                    ucfirst($property),
-                    lcfirst($property)
+                    Format::className($property),
+                    Format::paramName($property)
                 );
                 $this->objects[$object]['methods'] .= sprintf(
                     GetMethod::getTemplate(),
-                    lcfirst($property),
-                    ucfirst($property)
+                    Format::methodName($property),
+                    Format::className($property)
                 );
                 $this->objects[$object]['methods'] .= sprintf(
                     AddMethod::getTemplate(),
-                    lcfirst($property),
-                    ucfirst($property)
+                    Format::methodName($property),
+                    Format::className($property)
                 );
                 $this->objects[$object]['use'] .= sprintf(
                     UseNamespace::getTemplate(),
-                    $this->options['--namespace'].'\\'.ucfirst($property)
+                    $this->options['--namespace'].'\\'.Format::className($property)
                 );
 
                 $this->queue[$property] = $value[0];
@@ -173,18 +174,18 @@ class Loader
             if ($this->isInternalType($value)) {
                 $this->objects[$object]['arguments'] .= sprintf(
                     Argument::getTemplate(),
-                    lcfirst($property),
-                    lcfirst($property)
+                    Format::paramName($property),
+                    Format::paramName($property)
                 );
                 $this->objects[$object]['methods'] .= sprintf(
                     GetMethod::getTemplate(),
-                    lcfirst($property),
-                    ucfirst($property)
+                    Format::methodName($property),
+                    Format::className($property)
                 );
                 $this->objects[$object]['methods'] .= sprintf(
                     SetMethod::getTemplate(),
-                    lcfirst($property),
-                    ucfirst($property),
+                    Format::methodName($property),
+                    Format::className($property),
                     gettype($value)
                 );
             }
