@@ -33,7 +33,6 @@ class Command
     public function run(array $args)
     {
         Message::write(Message::$startTemplate);
-
         $this->handleArgs($args);
         $this->handleOptions($args);
 

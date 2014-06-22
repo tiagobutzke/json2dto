@@ -1,7 +1,12 @@
 #!/usr/bin/env php
 <?php
+$autoloaders = array(
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/vendor/autoload.php',
+    __DIR__ . '/../../../vendor/autoload.php',
+);
 
-foreach (array(__DIR__ . '/../vendor/autoload.php', __DIR__ . '/vendor/autoload.php') as $file) {
+foreach ($autoloaders as $file) {
     if (file_exists($file)) {
         define('JSON2DTO_COMPOSER_INSTALL', $file);
         break;
