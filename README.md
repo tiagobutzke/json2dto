@@ -10,7 +10,7 @@ git clone git@github.com:tiagobutzke/json2dto.git
 
 ### Install via Composer
 ```json
-# add in composer.json
+// add in composer.json
 "require-dev": {
     "tiagobutzke/json2dto": "1.0.*"
 }
